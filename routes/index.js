@@ -22,13 +22,12 @@ router.post('/docs/new', function(req, res, next) {
   var docs = database.ref("docs");
   var new_docs = {
     "title": req.body.title || "Untitled",
-    "deadline": req.body.deadline || null,
+    "deadline": moment(req.body.deadline).unix() || null,
     "category": req.body.category || null,
     "timestamp": moment().unix(),
     "content": req.body.content,
     "length": req.body.content.length,
-    "author": req.body.author || '',
-    "comments": []
+    "author": req.body.author || ''
   };
   // TODO: add author/user
   docs.push(new_docs);

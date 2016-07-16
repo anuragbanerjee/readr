@@ -14,7 +14,7 @@ a {
     background-color:rgba(255,255,255,.8);
 }
 #login-dp .help-block{
-    font-size:12px    
+    font-size:12px
 }
 #login-dp .bottom{
     background-color:rgba(255,255,255,.8);
@@ -23,7 +23,7 @@ a {
     padding:14px;
 }
 #login-dp .social-buttons{
-    margin:12px 0    
+    margin:12px 0
 }
 #login-dp .social-buttons a{
     width: 48%;
@@ -37,7 +37,7 @@ a {
 }
 .btn-fb:hover{
     color: #fff;
-    background-color:#496ebc 
+    background-color:#496ebc
 }
 .btn-tw{
     color: #fff;
@@ -62,4 +62,13 @@ a {
 }
 .navbar-brand:hover {
     color: #00dfff;
+}
+
+.page-header {
+  border: 0 !important;
+}
+
+.card-text {
+  height: 200px;
+  overflow: scroll;
 }
