@@ -3,7 +3,7 @@
 <script>
   function makeCard(card) {
     // return '<div class="card">a </div>';
-    return '<div class="card" id="'+ card.key +'"> <div class="col-md-10 col-md-offset-1" style="border: 1px solid grey; box-shadow: 5px 5px 3px #c0c0c0; margin-bottom: 40px;"> <div class="card card-block"><a class="btn btn-success pull-right" href="/docs/show/' + card.key + '">Proofread</a><h3 class="card-title">' + card.title +'</h3> <h4 class="card-title">'+ card.author +'</h4><p class="card-text">'+ card.content +'</p> </div> <div class="progress"> <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: '+ card.proofread_score +'%;"><span class="sr-only">'+ card.proofread_score +'% Complete</span></div> </div></div>'
+    return '<div class="card" id="'+ card.key +'"> <div class="col-md-10 col-md-offset-1" style="border: 1px solid grey; box-shadow: 5px 5px 3px #c0c0c0; margin-bottom: 40px;"> <div class="card card-block"><a class="btn btn-success pull-right" href="/docs/show/' + card.key + '">Proofread</a><h3 class="card-title">' + card.title +'</h3> <h4 class="card-title">'+ card.author +'</h4><span>'+ moment.unix(card.timestamp).format('MMMM, DD, YYYY: h:mm A') +'</span><br/><p class="card-text">'+ card.content +'</p> </div> <div class="progress"> <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: '+ card.proofread_score +'%;"><span class="sr-only">'+ card.proofread_score +'% Complete</span></div> </div></div>'
   }
 
   $("body").ready(function () {
