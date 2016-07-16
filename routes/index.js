@@ -27,6 +27,7 @@ router.post('/docs/new', function(req, res, next) {
     "timestamp": moment().unix(),
     "content": req.body.content,
     "length": req.body.content.length,
+    "author": req.body.author || '',
     "comments": []
   };
   // TODO: add author/user
