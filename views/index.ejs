@@ -1,2 +1,67 @@
 <% layout('layout') -%>
-body
+<!--begin infinite scroll feed-->
+<script>
+	function dayDiff(date) {
+		return Math.floor((date - new Date().getTime())/(24*3600*1000));
+	}
+	function minIndex(arr) {
+		var index=0;
+		for(var i=1;i<arr.length;i++) {
+			if(arr[i]<arr[index]) {
+				index=i;
+			}
+		}
+		return index;
+	}
+	function snippet(str) {
+		return str.slice(0, 20);
+	}
+	var proofread_scores = [];
+	var data_copy = [];
+	var indexes = [];
+	$.get('/docs', null, function(data) {
+		for(var i=0;i<data.length;i++) {
+			// TODO: use category
+			var proofread_score = 0;
+			var comments=data[i].comments;
+			for(var j=0;j<comments.length;j++) {
+				proofread_score += 1.5*comments[j].score + 3/(j+1);
+			}
+			proofread_score += dayDiff(data[i].deadline);
+			proofread_score = (proofread_score > 100) ? 100 : proofread_score;
+			proofread_scores.push(proofread_score);
+		}
+		data_copy = data;
+	});
+	var proofread_scores_copy = proofread_scores;
+	for(var i=0;i<proofread_scores_copy.length;i++) {
+		var index=minIndex(proofread_scores_copy);
+		indexes.push(index);
+		proofread_scores_copy.splice(index,1);
+	}
+</script>
+<div id="feed">
+</div>
+<script>
+	for(var i=0;i<indexes.length;i++) {
+		var entry = data_copy[indexes[i]];
+
+		var htmlRep = feed.createElement('div');
+		htmlRep.innerHTML += '\
+		<container class="card">\
+		  <div class="col-sm-6 col-sm-offset-3" style="border: 1px solid grey; box-shadow: 5px 5px 3px grey; margin-bottom: 20px;">\
+				  <div class="card card-block">\
+					<h3 class="card-title">'+entry.title+'</h3>\
+					<h4 class="card-title">'+entry.author+'</h4>\
+					<p class="card-text">'+snippet(entry.content)+'</p>\
+				  </div>\
+				  <div class="progress">\
+				    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: '+proofread_scores[indexes[i]]+'%;">\
+					  <span class="sr-only">'+proofread_scores[indexes[i]]+'% Complete</span>\
+				  	</div>\
+			  	  </div>\
+		   </div>\
+		</container>\
+		';
+	}
+</script>

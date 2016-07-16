@@ -22,7 +22,8 @@ router.post('/docs/new', function(req, res, next) {
   var docs = database.ref("docs");
   var new_docs = {
     "title": req.body.title || "Untitled",
-    "deadline": req.body.deadline || null,
+    "author": req.body.author || "";
+    "deadline": req.body.deadline,
     "category": req.body.category || null,
     "timestamp": moment().unix(),
     "content": req.body.content,
@@ -35,7 +36,7 @@ router.post('/docs/new', function(req, res, next) {
   res.send("");
 });
 
-// GET all comments for a particular doc
+// GET comments for a particular doc
 router.get('/docs/:id/comments', function(req, res, next) {
   var docs = database.ref("docs/" + req.params.id);
   docs.orderByChild("comments").once('value', function(snapshot){
@@ -44,14 +45,16 @@ router.get('/docs/:id/comments', function(req, res, next) {
 	});
 });
 
-// POST a comment to a particular document
+// POST a comment group to a particular document
 router.post('/docs/:id/comments', function(req, res, next) {
   var doc_comments = database.ref("docs/" + req.params.id + "/comments");
-  var new_comment = {};
-  new_comment.content = req.body.content;
-  new_comment.start_index = req.body.start;
-  new_comment.end_index = req.body.end;
-  doc_comments.push(comment);
+  var new_comment_group = {
+    "comments": req.body.comments,
+    "score": req.body.score
+  };
+  doc_comments.push(new_comment_group);
+  res.status(200);
+  res.send("");
 });
 
 /* GET upload page. */
