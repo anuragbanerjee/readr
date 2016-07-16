@@ -8,6 +8,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
+// GET all docs
 router.get('/docs', function(req, res, next) {
   var docs = database.ref("docs");
   docs.once('value', function(snapshot){
@@ -16,6 +17,7 @@ router.get('/docs', function(req, res, next) {
 	});
 });
 
+// POST a new document
 router.post('/docs/new', function(req, res, next) {
   var docs = database.ref("docs");
   var new_docs = {
@@ -33,6 +35,7 @@ router.post('/docs/new', function(req, res, next) {
   res.send("");
 });
 
+// GET all comments for a particular doc
 router.get('/docs/:id/comments', function(req, res, next) {
   var docs = database.ref("docs/" + req.params.id);
   docs.orderByChild("comments").once('value', function(snapshot){
@@ -41,6 +44,7 @@ router.get('/docs/:id/comments', function(req, res, next) {
 	});
 });
 
+// POST a comment to a particular document
 router.post('/docs/:id/comments', function(req, res, next) {
   var doc_comments = database.ref("docs/" + req.params.id + "/comments");
   var new_comment = {};
@@ -50,12 +54,9 @@ router.post('/docs/:id/comments', function(req, res, next) {
   doc_comments.push(comment);
 });
 
-// router.get('/comments', function(req, res, next) {
-//   var comments = database.ref("comments");
-//   comments.once('value', function(snapshot){
-// 		res.status(200);
-// 		res.json(snapshot.val());
-// 	});
-// });
+/* GET upload page. */
+router.get('/upload', function(req, res, next) {
+  res.render('upload', { title: 'Express' });
+});
 
 module.exports = router;
