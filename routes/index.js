@@ -27,12 +27,12 @@ router.post('/docs/new', function(req, res, next) {
     "timestamp": moment().unix(),
     "content": req.body.content,
     "length": req.body.content.length,
-    "author": req.body.author || ''
+    "author": req.body.author || null
   };
   // TODO: add author/user
   docs.push(new_docs);
   res.status(200);
-  res.send("");
+  res.redirect('/');
 });
 
 // GET all comments for a particular doc
@@ -69,7 +69,7 @@ router.get('/docs/show/:id', function(req, res, next) {
   var doc = database.ref("docs/" + req.params.id);
   doc.once('value', function (snapshot) {
     doc = snapshot.val();
-    res.render('detailview', { title: doc.title , author: doc.author, content: doc.content.replaceAll('\\n', '<br/><br/>')});
+    res.render('detailview', { title: doc.title , author: doc.author, content: doc.content.replaceAll('\\n', '<br/>')});
   });
 });
 
