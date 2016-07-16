@@ -26,7 +26,7 @@ a {
     margin:12px 0    
 }
 #login-dp .social-buttons a{
-    width: 49%;
+    width: 48%;
 }
 #login-dp .form-group {
     margin-bottom: 10px;
@@ -47,7 +47,7 @@ a {
     color: #fff;
     background-color:#59b5fa;
 }
-@media(max-width:768px){
+@media(max-width:1000px){
     #login-dp{
         background-color: inherit;
         color: #fff;
