@@ -57,3 +57,9 @@ a {
         border-top:0 none;
     }
 }
+.navbar-header .navbar-brand {
+    color: #00d8ff;
+}
+.navbar-brand:hover {
+    color: #00dfff;
+}
