@@ -59,4 +59,18 @@ router.get('/upload', function(req, res, next) {
   res.render('upload', { title: 'Express' });
 });
 
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+// GET detail view
+router.get('/docs/show/:id', function(req, res, next) {
+  var doc = database.ref("docs/" + req.params.id);
+  doc.once('value', function (snapshot) {
+    doc = snapshot.val();
+    res.render('detailview', { title: doc.title , author: doc.author, content: doc.content.replaceAll('\\n', '<br/><br/>')});
+  });
+});
+
 module.exports = router;
